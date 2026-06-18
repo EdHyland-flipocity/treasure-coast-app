@@ -1,0 +1,6 @@
+node_modules/
+dist/
+.DS_Store
+*.log
+www/*/includes/db.php
+/tmp/stlucie_report_cache.json

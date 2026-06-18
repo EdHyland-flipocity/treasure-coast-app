@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Treasure Coast Intelligence Platform</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #060D1A; color: #EDF2F7;
+    font-family: 'Montserrat', system-ui, sans-serif;
+    height: 100vh; display: flex; flex-direction: column;
+    overflow: hidden; user-select: none;
+  }
+
+  .titlebar {
+    height: 48px; background: rgba(6,13,26,0.98);
+    border-bottom: 1px solid #0A2A1A;
+    display: flex; align-items: center; padding: 0 16px; gap: 16px;
+    -webkit-app-region: drag; flex-shrink: 0;
+  }
+  .titlebar-logo { display: flex; align-items: center; gap: 10px; -webkit-app-region: no-drag; }
+  .titlebar-emblem {
+    width: 28px; height: 28px; border: 1.5px solid #2ABFB0;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; letter-spacing: -1px; color: #2ABFB0; flex-shrink: 0;
+  }
+  .titlebar-name { font-size: 13px; font-weight: 600; color: #5ED8CC; letter-spacing: 0.04em; white-space: nowrap; }
+
+  .tabbar {
+    display: flex; align-items: center; gap: 2px;
+    margin-left: auto; flex-wrap: nowrap; overflow: hidden;
+    -webkit-app-region: no-drag;
+  }
+  .tab {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 14px; border-radius: 20px; font-size: 10px;
+    font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+    cursor: pointer; border: 1px solid transparent; color: #4A6080;
+    transition: all 0.2s; white-space: nowrap; -webkit-app-region: no-drag;
+  }
+  .tab:hover { color: #94A3B8; border-color: #0A2A1A; background: #081510; }
+  .tab.active { color: #5ED8CC; border-color: rgba(42,191,176,0.35); background: rgba(42,191,176,0.08); }
+  .tab-dot { width: 5px; height: 5px; border-radius: 50%; background: #4A6080; flex-shrink: 0; }
+  .tab.active .tab-dot { background: #2ABFB0; box-shadow: 0 0 6px #2ABFB0; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1}50%{opacity:.5} }
+
+  /* County dividers in tab bar */
+  .tab-divider { width: 1px; height: 20px; background: #1A2E4A; margin: 0 4px; flex-shrink: 0; }
+  .tab-county { font-size: 8px; letter-spacing: 0.15em; color: #2A4060; text-transform: uppercase; padding: 0 6px; flex-shrink: 0; }
+
+  .toolbar {
+    height: 40px; background: #0B1525; border-bottom: 1px solid #1A2E4A;
+    display: flex; align-items: center; padding: 0 12px; gap: 8px;
+    flex-shrink: 0; -webkit-app-region: drag;
+  }
+  .toolbar-btn {
+    display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px;
+    border-radius: 6px; font-size: 10px; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; cursor: pointer; border: 1px solid #1A2E4A;
+    color: #94A3B8; background: transparent; transition: all 0.2s;
+    -webkit-app-region: no-drag;
+  }
+  .toolbar-btn:hover { color: #EDF2F7; border-color: #2ABFB0; background: rgba(42,191,176,0.08); }
+  .toolbar-btn.primary { color: #5ED8CC; border-color: rgba(42,191,176,0.3); }
+  .toolbar-url {
+    flex: 1; height: 26px; background: rgba(6,13,26,0.8); border: 1px solid #1A2E4A;
+    border-radius: 4px; padding: 0 10px; font-size: 10px;
+    font-family: 'Space Mono', monospace; color: #4A6080; -webkit-app-region: no-drag;
+  }
+  .toolbar-status { display: flex; align-items: center; gap: 6px; font-size: 10px; color: #4A6080; -webkit-app-region: no-drag; }
+  .status-dot { width: 7px; height: 7px; border-radius: 50%; background: #2FBF71; box-shadow: 0 0 6px #2FBF71; }
+  .status-dot.loading { background: #2ABFB0; box-shadow: 0 0 6px #2ABFB0; animation: pulse 1s infinite; }
+
+  .webview-container { flex: 1; position: relative; overflow: hidden; }
+  webview { position: absolute; inset: 0; width: 100%; height: 100%; display: none; }
+  webview.active { display: flex; }
+
+  .loading-screen {
+    position: absolute; inset: 0; background: #060D1A;
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; gap: 20px; z-index: 100;
+  }
+  .loading-screen.hidden { display: none; }
+  .loading-spinner { width: 48px; height: 48px; border: 2px solid #0A2A1A; border-top-color: #2ABFB0; border-radius: 50%; animation: spin 0.8s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-title { font-size: 22px; font-family: 'Georgia', serif; color: #5ED8CC; font-style: italic; }
+  .loading-sub { font-size: 11px; color: #4A6080; letter-spacing: 0.2em; text-transform: uppercase; }
+  .loading-progress { width: 200px; height: 2px; background: #1A2E4A; border-radius: 1px; overflow: hidden; }
+  .loading-bar { height: 100%; background: linear-gradient(90deg, #2ABFB0, #5ED8CC); border-radius: 1px; animation: progress 2s ease-in-out infinite; width: 40%; }
+  @keyframes progress { 0%{transform:translateX(-100%)} 100%{transform:translateX(400%)} }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="titlebar">
+  <div class="titlebar-logo">
+    <div class="titlebar-emblem">TC</div>
+    <div class="titlebar-name">Treasure Coast Intelligence Platform</div>
+  </div>
+  <div class="tabbar">
+    <span class="tab-county">St. Lucie</span>
+    <div class="tab active" data-tab="slreport" onclick="switchTab('slreport')"><span class="tab-dot"></span>Market Report</div>
+    <div class="tab" data-tab="slsales" onclick="switchTab('slsales')"><span class="tab-dot"></span>Sales Registry</div>
+    <div class="tab-divider"></div>
+    <span class="tab-county">Martin</span>
+    <div class="tab" data-tab="martinreport" onclick="switchTab('martinreport')"><span class="tab-dot"></span>Market Report</div>
+    <div class="tab" data-tab="martinmatch" onclick="switchTab('martinmatch')"><span class="tab-dot"></span>Matchmaker</div>
+    <div class="tab" data-tab="martinradar" onclick="switchTab('martinradar')"><span class="tab-dot"></span>Radar</div>
+    <div class="tab-divider"></div>
+    <span class="tab-county">Regional</span>
+    <div class="tab" data-tab="fliptracker" onclick="switchTab('fliptracker')"><span class="tab-dot"></span>Flip Tracker</div>
+    <div class="tab" data-tab="entityintel" onclick="switchTab('entityintel')"><span class="tab-dot"></span>Entity Intel</div>
+  </div>
+</div>
+
+<div class="toolbar">
+  <button class="toolbar-btn primary" onclick="refreshActive()">↻ Refresh</button>
+  <button class="toolbar-btn" onclick="goBack()">← Back</button>
+  <button class="toolbar-btn" onclick="goForward()">→ Forward</button>
+  <input class="toolbar-url" id="urlBar" readonly>
+  <div class="toolbar-status">
+    <div class="status-dot" id="statusDot"></div>
+    <span id="statusText">Ready</span>
+  </div>
+  <button class="toolbar-btn" onclick="exportPDF()">⬇ PDF</button>
+</div>
+
+<div class="loading-screen" id="loadingScreen">
+  <div class="loading-spinner"></div>
+  <div class="loading-title">Treasure Coast Intelligence</div>
+  <div class="loading-sub">Starting local server…</div>
+  <div class="loading-progress"><div class="loading-bar"></div></div>
+</div>
+
+<div class="webview-container">
+  <webview id="wv-slreport"     class="active" src="http://127.0.0.1:8093/stlucie_report/"      allowpopups webpreferences="allowRunningInsecureContent=yes, javascript=yes"></webview>
+  <webview id="wv-slsales"                     src="about:blank"                                 allowpopups webpreferences="allowRunningInsecureContent=yes, javascript=yes"></webview>
+  <webview id="wv-martinreport"                src="about:blank"                                 allowpopups webpreferences="allowRunningInsecureContent=yes, javascript=yes"></webview>
+  <webview id="wv-martinmatch"                 src="about:blank"                                 allowpopups webpreferences="allowRunningInsecureContent=yes, javascript=yes"></webview>
+  <webview id="wv-martinradar"                 src="about:blank"                                 allowpopups webpreferences="allowRunningInsecureContent=yes, javascript=yes"></webview>
+  <webview id="wv-fliptracker"                 src="about:blank"                                 allowpopups webpreferences="allowRunningInsecureContent=yes, javascript=yes"></webview>
+  <webview id="wv-entityintel"                 src="about:blank"                                 allowpopups webpreferences="allowRunningInsecureContent=yes, javascript=yes"></webview>
+</div>
+
+<script>
+let PHP_PORT = 8093;
+let activeTab = 'slreport';
+
+const TABS = {
+  slreport:    () => `http://127.0.0.1:${PHP_PORT}/stlucie_report/`,
+  slsales:     () => `http://127.0.0.1:${PHP_PORT}/stlucie/`,
+  martinreport:() => `http://127.0.0.1:${PHP_PORT}/martin_report/`,
+  martinmatch: () => `http://127.0.0.1:${PHP_PORT}/martin_matchmaker/`,
+  martinradar: () => `http://127.0.0.1:${PHP_PORT}/martin_radar/`,
+  fliptracker: () => `http://127.0.0.1:${PHP_PORT}/treasure_fliptracker/`,
+  entityintel: () => `http://127.0.0.1:${PHP_PORT}/entity_intel/`,
+};
+
+async function init() {
+  if (window.electronAPI) {
+    PHP_PORT = await window.electronAPI.getPhpPort();
+    let attempts = 0;
+    const waitForReady = async () => {
+      attempts++;
+      const ready = await window.electronAPI.getServerReady();
+      if (ready) {
+        document.getElementById('loadingScreen').classList.add('hidden');
+        setupWebviewEvents();
+        const firstWv = document.getElementById('wv-slreport');
+        if (firstWv) {
+          firstWv.addEventListener('did-finish-load', () => {
+            setTimeout(() => {
+              Object.keys(TABS).forEach(tab => {
+                if (tab === 'slreport') return;
+                const wv = document.getElementById('wv-' + tab);
+                if (wv && (wv.src === 'about:blank' || !wv.src)) wv.src = TABS[tab]();
+              });
+            }, 1000);
+          }, { once: true });
+        }
+      } else if (attempts < 40) {
+        setTimeout(waitForReady, 300);
+      } else {
+        document.querySelector('.loading-sub').textContent = 'Server failed to start';
+      }
+    };
+    waitForReady();
+    window.electronAPI.onNavigate(tab => switchTab(tab));
+    window.electronAPI.onRefresh(() => refreshActive());
+    window.electronAPI.onExportPdf(() => exportPDF());
+  } else {
+    document.getElementById('loadingScreen').classList.add('hidden');
+    setupWebviewEvents();
+  }
+}
+
+function setupWebviewEvents() {
+  Object.keys(TABS).forEach(tab => {
+    const wv = document.getElementById('wv-' + tab);
+    if (!wv) return;
+    wv.addEventListener('did-start-loading', () => { if (tab === activeTab) setStatus('loading', 'Loading…'); });
+    wv.addEventListener('did-finish-load',   () => { if (tab === activeTab) { setStatus('ready', 'Ready'); updateUrlBar(wv.getURL ? wv.getURL() : TABS[tab]()); } });
+    wv.addEventListener('did-fail-load', (e) => { if (tab === activeTab && e.errorCode !== -3) setStatus('error', 'Load failed'); });
+  });
+}
+
+function switchTab(tab) {
+  if (tab === activeTab) return;
+  document.getElementById('wv-' + activeTab)?.classList.remove('active');
+  document.querySelector(`.tab[data-tab="${activeTab}"]`)?.classList.remove('active');
+  activeTab = tab;
+  const wv = document.getElementById('wv-' + tab);
+  wv?.classList.add('active');
+  document.querySelector(`.tab[data-tab="${tab}"]`)?.classList.add('active');
+  if (wv && (wv.src === 'about:blank' || !wv.src)) wv.src = TABS[tab]();
+  updateUrlBar(wv?.getURL ? wv.getURL() : TABS[tab]());
+}
+
+function refreshActive() {
+  const wv = document.getElementById('wv-' + activeTab);
+  if (wv) { setStatus('loading', 'Refreshing…'); wv.reload ? wv.reload() : (wv.src = TABS[activeTab]()); }
+}
+function goBack()    { const wv = document.getElementById('wv-' + activeTab); if (wv?.canGoBack?.())    wv.goBack(); }
+function goForward() { const wv = document.getElementById('wv-' + activeTab); if (wv?.canGoForward?.()) wv.goForward(); }
+function exportPDF() { document.getElementById('wv-' + activeTab)?.executeJavaScript('typeof exportPDF==="function"?exportPDF():window.print()'); }
+
+function setStatus(state, text) {
+  const dot = document.getElementById('statusDot');
+  const span = document.getElementById('statusText');
+  if (dot) { dot.className = 'status-dot' + (state==='loading'?' loading':''); if (state==='error') dot.style.background='#EF4444'; else dot.style.background=''; }
+  if (span) span.textContent = text;
+}
+function updateUrlBar(url) {
+  const bar = document.getElementById('urlBar');
+  if (bar && url) bar.value = url.replace(`http://127.0.0.1:${PHP_PORT}`, 'treasure-coast://local');
+}
+
+document.addEventListener('keydown', e => {
+  if ((e.ctrlKey||e.metaKey) && e.key==='1') switchTab('slreport');
+  if ((e.ctrlKey||e.metaKey) && e.key==='2') switchTab('slsales');
+  if ((e.ctrlKey||e.metaKey) && e.key==='3') switchTab('martinreport');
+  if ((e.ctrlKey||e.metaKey) && e.key==='4') switchTab('martinmatch');
+  if ((e.ctrlKey||e.metaKey) && e.key==='5') switchTab('martinradar');
+  if ((e.ctrlKey||e.metaKey) && e.key==='6') switchTab('fliptracker');
+  if ((e.ctrlKey||e.metaKey) && e.key==='7') switchTab('entityintel');
+  if ((e.ctrlKey||e.metaKey) && e.key==='r') { e.preventDefault(); refreshActive(); }
+});
+
+init();
+</script>
+</body>
+</html>

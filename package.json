@@ -1,0 +1,26 @@
+{
+  "name": "treasure-coast-intelligence",
+  "version": "1.0.0",
+  "description": "Treasure Coast Real Estate Intelligence Platform — St. Lucie & Martin County",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build:linux": "electron-builder --linux",
+    "build:win":   "electron-builder --win",
+    "build:mac":   "electron-builder --mac",
+    "build:all":   "electron-builder --linux --win --mac"
+  },
+  "build": {
+    "appId": "com.realestate.treasurecoast",
+    "productName": "Treasure Coast Intelligence",
+    "directories": { "output": "dist" },
+    "files": ["main.js","preload.js","app.html","assets/**","www/**"],
+    "linux":  { "target": ["AppImage","deb"], "category": "Finance", "icon": "assets/icon.png" },
+    "win":    { "target": "nsis", "icon": "assets/icon.ico" },
+    "mac":    { "target": "dmg", "icon": "assets/icon.icns", "category": "public.app-category.finance" }
+  },
+  "devDependencies": {
+    "electron": "^28.0.0",
+    "electron-builder": "^24.0.0"
+  }
+}

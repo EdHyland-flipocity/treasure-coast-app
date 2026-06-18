@@ -1,0 +1,314 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap');
+:root{
+  --violet:#8B5CF6;--violet-light:#A78BFA;--violet-a:rgba(139,92,246,0.15);
+  --coral:#E8506A;--coral-light:#F57E94;
+  --cyan:#06B6D4;--cyan-light:#67E8F9;
+  --teal:#2ABFB0;--teal-light:#5ED8CC;
+  --amber:#E8823A;--amber-light:#F5A96B;
+  --gold:#C9A84C;--gold-light:#E8C97E;
+  --emerald:#10B981;--emerald-light:#34D399;
+  --sky:#0EA5E9;--sky-light:#38BDF8;
+  --red:#EF4444;--red-light:#FCA5A5;
+  --green:#16A34A;--green-light:#4ADE80;
+  --navy-deep:#080E1A;--navy-mid:#0D1628;--navy-card:#111D33;
+  --navy-border:#1B2D4F;--navy-hover:#162340;
+  --text-primary:#E8E4DA;--text-secondary:#9AAABB;--text-muted:#5C7088;
+  --accent-green:#2FBF71;
+  --font-display:'Cormorant Garamond',Georgia,serif;
+  --font-body:'Montserrat',system-ui,sans-serif;
+  --font-mono:'Space Mono',monospace;
+  --radius-md:8px;--radius-lg:14px;--radius-xl:20px;
+  --transition:all .25s cubic-bezier(.4,0,.2,1);
+  --shadow-card:0 4px 24px rgba(0,0,0,.45);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--navy-deep);color:var(--text-primary);font-family:var(--font-body);font-size:13.5px;line-height:1.6;min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(139,92,246,0.07) 0%,transparent 50%)}
+.app-shell{position:relative;z-index:1;display:flex;flex-direction:column;min-height:100vh}
+
+/* Portfolio Nav */
+.portfolio-nav{display:flex;align-items:center;justify-content:center;gap:2px;padding:8px 32px;
+  background:rgba(4,8,16,.97);border-bottom:1px solid rgba(139,92,246,.1);
+  backdrop-filter:blur(16px);flex-wrap:wrap}
+.portfolio-nav-label{font-size:9px;font-weight:600;letter-spacing:.3em;color:var(--text-muted);
+  text-transform:uppercase;margin-right:16px}
+.portfolio-nav-link{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;
+  border-radius:30px;font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;
+  text-decoration:none;color:var(--text-muted);border:1px solid transparent;transition:var(--transition);white-space:nowrap}
+.portfolio-nav-link:hover{color:var(--text-primary);border-color:var(--navy-border);background:var(--navy-hover)}
+.portfolio-nav-link.active{color:var(--violet-light);border-color:rgba(139,92,246,.35);background:rgba(139,92,246,.08)}
+.portfolio-nav-link.gold-active{color:var(--gold-light);border-color:rgba(201,168,76,.35);background:rgba(201,168,76,.08)}
+.portfolio-nav-link.teal-active{color:var(--teal-light);border-color:rgba(42,191,176,.35);background:rgba(42,191,176,.08)}
+.portfolio-nav-link.amber-active{color:var(--amber-light);border-color:rgba(232,130,58,.35);background:rgba(232,130,58,.08)}
+.portfolio-nav-link.coral-active{color:var(--coral-light);border-color:rgba(232,80,106,.35);background:rgba(232,80,106,.08)}
+.portfolio-nav-link.violet-active{color:var(--violet-light);border-color:rgba(139,92,246,.35);background:rgba(139,92,246,.08)}
+.portfolio-nav-link.emerald-active{color:var(--emerald-light);border-color:rgba(16,185,129,.35);background:rgba(16,185,129,.08)}
+.portfolio-nav-link.sky-active{color:var(--sky-light);border-color:rgba(14,165,233,.35);background:rgba(14,165,233,.08)}
+.portfolio-nav-link.cyan-active{color:var(--cyan-light);border-color:rgba(6,182,212,.35);background:rgba(6,182,212,.08)}
+.portfolio-nav-link .nav-dot{width:5px;height:5px;border-radius:50%;background:var(--text-muted);flex-shrink:0}
+.portfolio-nav-link.active .nav-dot{background:var(--violet);box-shadow:0 0 6px var(--violet)}
+.portfolio-nav-link.gold-active .nav-dot{background:var(--gold)}
+.portfolio-nav-link.teal-active .nav-dot{background:var(--teal)}
+.portfolio-nav-link.amber-active .nav-dot{background:var(--amber)}
+.portfolio-nav-link.coral-active .nav-dot{background:var(--coral)}
+.portfolio-nav-link.violet-active .nav-dot{background:var(--violet)}
+.portfolio-nav-link.emerald-active .nav-dot{background:var(--emerald)}
+.portfolio-nav-link.sky-active .nav-dot{background:var(--sky)}
+.portfolio-nav-link.cyan-active .nav-dot{background:var(--cyan)}
+.portfolio-nav-divider{width:1px;height:14px;background:var(--navy-border);margin:0 6px}
+
+/* Topnav */
+.topnav{display:flex;align-items:center;justify-content:space-between;padding:0 32px;height:64px;
+  background:rgba(8,14,26,.92);border-bottom:1px solid var(--navy-border);backdrop-filter:blur(12px)}
+.topnav-brand{display:flex;align-items:center;gap:14px}
+.brand-emblem{width:36px;height:36px;border:1.5px solid var(--violet);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.brand-text{display:flex;flex-direction:column;line-height:1.1}
+.brand-title{font-family:var(--font-display);font-size:18px;font-weight:600;color:var(--violet-light)}
+.brand-sub{font-size:9px;font-weight:500;letter-spacing:.2em;color:var(--text-muted);text-transform:uppercase}
+.topnav-meta{display:flex;align-items:center;gap:20px}
+.live-indicator{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.1em}
+.live-dot{width:7px;height:7px;background:var(--accent-green);border-radius:50%;
+  box-shadow:0 0 6px var(--accent-green);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+.topnav-timestamp{font-family:var(--font-mono);font-size:10.5px;color:var(--text-muted)}
+
+/* Hero */
+.page-hero{padding:48px 48px 32px;border-bottom:1px solid var(--navy-border);position:relative;overflow:hidden}
+.page-hero::before{content:'';position:absolute;top:-100px;left:50%;transform:translateX(-50%);
+  width:800px;height:400px;background:radial-gradient(ellipse,rgba(139,92,246,.07) 0%,transparent 70%);pointer-events:none}
+.hero-eyebrow{font-size:10px;font-weight:600;letter-spacing:.3em;color:var(--violet);
+  text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.hero-eyebrow::after{content:'';flex:0 0 40px;height:1px;background:var(--violet)}
+.hero-title{font-family:var(--font-display);font-size:clamp(32px,5vw,60px);font-weight:300;
+  color:var(--text-primary);letter-spacing:.01em;line-height:1.1;margin-bottom:12px}
+.hero-title span{color:var(--violet-light);font-style:italic}
+.hero-desc{font-size:13px;color:var(--text-secondary);max-width:700px;margin-bottom:20px}
+.hero-tags{display:flex;gap:8px;flex-wrap:wrap}
+.hero-tag{font-size:10px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;
+  padding:5px 12px;border-radius:20px;background:rgba(139,92,246,.1);
+  border:1px solid rgba(139,92,246,.2);color:var(--violet-light)}
+
+/* KPI Strip */
+.kpi-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
+  gap:1px;background:var(--navy-border);border-bottom:1px solid var(--navy-border)}
+.kpi-cell{background:var(--navy-mid);padding:18px 20px;display:flex;flex-direction:column;
+  gap:4px;position:relative;overflow:hidden;transition:var(--transition);cursor:default}
+.kpi-cell:hover{background:var(--navy-hover)}
+.kpi-cell::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.kpi-cell.violet::before{background:var(--violet)}
+.kpi-cell.coral::before{background:var(--coral)}
+.kpi-cell.amber::before{background:var(--amber)}
+.kpi-cell.gold::before{background:var(--gold)}
+.kpi-cell.teal::before{background:var(--teal)}
+.kpi-label{font-size:9px;font-weight:600;letter-spacing:.22em;color:var(--text-muted);text-transform:uppercase}
+.kpi-value{font-family:var(--font-display);font-size:26px;font-weight:600;line-height:1}
+.kpi-cell.violet .kpi-value{color:var(--violet-light)}
+.kpi-cell.coral .kpi-value{color:var(--coral-light)}
+.kpi-cell.amber .kpi-value{color:var(--amber-light)}
+.kpi-cell.gold .kpi-value{color:var(--gold-light)}
+.kpi-cell.teal .kpi-value{color:var(--teal-light)}
+.kpi-sub{font-size:9.5px;color:var(--text-muted)}
+
+/* Report main */
+.report-main{flex:1;padding:32px 48px;display:flex;flex-direction:column;gap:24px}
+
+/* Filter panel */
+.filter-panel{background:var(--navy-card);border:1px solid var(--navy-border);
+  border-radius:var(--radius-xl);padding:20px 24px;display:flex;flex-direction:column;gap:14px}
+.filter-row{display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start}
+.filter-group{display:flex;flex-direction:column;gap:8px}
+.filter-label{font-size:9px;font-weight:600;letter-spacing:.25em;color:var(--text-muted);text-transform:uppercase}
+.type-tabs{display:flex;gap:6px;flex-wrap:wrap}
+.type-tab{padding:6px 14px;border-radius:20px;font-size:10px;font-weight:500;
+  letter-spacing:.12em;text-transform:uppercase;border:1px solid var(--navy-border);
+  background:transparent;color:var(--text-muted);cursor:pointer;transition:var(--transition)}
+.type-tab:hover{border-color:var(--violet);color:var(--violet-light)}
+.type-tab.active{background:rgba(139,92,246,.15);border-color:rgba(139,92,246,.4);color:var(--violet-light)}
+.type-tab.county-sara.active{background:rgba(232,80,106,.12);border-color:rgba(232,80,106,.4);color:var(--coral-light)}
+.type-tab.county-mana.active{background:rgba(6,182,212,.12);border-color:rgba(6,182,212,.4);color:var(--cyan-light)}
+.type-tab.county-stlu.active{background:rgba(42,191,176,.12);border-color:rgba(42,191,176,.4);color:var(--teal-light)}
+.type-tab.county-multi.active{background:rgba(232,130,58,.12);border-color:rgba(232,130,58,.4);color:var(--amber-light)}
+.type-tab.county-tri.active{background:rgba(201,168,76,.12);border-color:rgba(201,168,76,.4);color:var(--gold-light)}
+.search-wrap{position:relative;display:flex;align-items:center}
+.search-input{padding:8px 32px 8px 14px;background:var(--navy-mid);border:1px solid var(--navy-border);
+  border-radius:var(--radius-md);color:var(--text-primary);font-family:var(--font-body);
+  font-size:13px;outline:none;width:260px;transition:var(--transition)}
+.search-input:focus{border-color:var(--violet)}
+.search-clear{position:absolute;right:10px;background:none;border:none;color:var(--text-muted);
+  cursor:pointer;font-size:12px;padding:2px}
+.sort-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding-top:10px;
+  border-top:1px solid var(--navy-border)}
+.sort-label{font-size:10px;color:var(--text-muted);letter-spacing:.1em}
+.sort-select{padding:6px 12px;background:var(--navy-mid);border:1px solid var(--navy-border);
+  border-radius:var(--radius-md);color:var(--text-primary);font-family:var(--font-body);
+  font-size:12px;outline:none;cursor:pointer}
+.result-count{font-size:11px;color:var(--text-muted);margin-left:auto}
+.result-count strong{color:var(--violet-light);font-family:var(--font-display);font-size:16px}
+
+/* Entity Grid */
+.entity-grid{display:flex;flex-direction:column;gap:8px}
+.loading-state{display:flex;align-items:center;justify-content:center;gap:12px;
+  padding:60px;color:var(--text-muted);font-size:13px}
+.spinner{width:20px;height:20px;border:2px solid var(--navy-border);
+  border-top-color:var(--violet);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Entity Row */
+.entity-row{background:var(--navy-card);border:1px solid var(--navy-border);
+  border-radius:var(--radius-lg);padding:18px 22px;display:grid;
+  grid-template-columns:auto 1fr auto auto auto;gap:16px;align-items:center;
+  cursor:pointer;transition:var(--transition);position:relative;overflow:hidden}
+.entity-row::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px}
+.entity-row.type-Builder::before{background:var(--coral)}
+.entity-row.type-iBuyer::before{background:var(--amber)}
+.entity-row.type-SFR::before{background:var(--emerald)}
+.entity-row.type-BankGSE::before{background:var(--sky)}
+.entity-row.type-LLC::before{background:var(--violet)}
+.entity-row.type-Government::before{background:var(--teal)}
+.entity-row.type-Other::before{background:var(--text-muted)}
+.entity-row:hover{background:var(--navy-hover);border-color:var(--violet);transform:translateX(2px)}
+.entity-row:hover .entity-name{color:var(--violet-light)}
+
+.entity-rank{font-family:var(--font-mono);font-size:11px;color:var(--text-muted);
+  min-width:32px;text-align:right}
+.entity-main{display:flex;flex-direction:column;gap:3px;min-width:0}
+.entity-name{font-family:var(--font-display);font-size:18px;font-weight:400;
+  color:var(--text-primary);letter-spacing:.01em;transition:var(--transition);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.entity-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.entity-type-badge{font-size:9px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;
+  padding:3px 8px;border-radius:10px}
+.badge-Builder{background:rgba(232,80,106,.12);color:var(--coral-light);border:1px solid rgba(232,80,106,.25)}
+.badge-iBuyer{background:rgba(232,130,58,.12);color:var(--amber-light);border:1px solid rgba(232,130,58,.25)}
+.badge-SFR{background:rgba(16,185,129,.12);color:var(--emerald-light);border:1px solid rgba(16,185,129,.25)}
+.badge-BankGSE{background:rgba(14,165,233,.12);color:var(--sky-light);border:1px solid rgba(14,165,233,.25)}
+.badge-LLC{background:rgba(139,92,246,.12);color:var(--violet-light);border:1px solid rgba(139,92,246,.25)}
+.badge-Government{background:rgba(42,191,176,.12);color:var(--teal-light);border:1px solid rgba(42,191,176,.25)}
+.badge-Other{background:rgba(92,112,136,.12);color:var(--text-secondary);border:1px solid rgba(92,112,136,.25)}
+.entity-dates{font-size:10px;color:var(--text-muted);font-family:var(--font-mono)}
+
+.county-pills{display:flex;gap:6px;flex-shrink:0}
+.county-pill{display:flex;flex-direction:column;align-items:center;padding:6px 10px;
+  border-radius:var(--radius-md);border:1px solid;min-width:72px;gap:2px}
+.county-pill.sara{background:rgba(232,80,106,.08);border-color:rgba(232,80,106,.2)}
+.county-pill.mana{background:rgba(6,182,212,.08);border-color:rgba(6,182,212,.2)}
+.county-pill.stlu{background:rgba(42,191,176,.08);border-color:rgba(42,191,176,.2)}
+.county-pill.empty{background:rgba(27,45,79,.3);border-color:rgba(27,45,79,.5);opacity:.35}
+.pill-county{font-size:8px;font-weight:600;letter-spacing:.15em;text-transform:uppercase}
+.county-pill.sara .pill-county{color:var(--coral)}
+.county-pill.mana .pill-county{color:var(--cyan)}
+.county-pill.stlu .pill-county{color:var(--teal)}
+.county-pill.empty .pill-county{color:var(--text-muted)}
+.pill-count{font-family:var(--font-display);font-size:18px;font-weight:600;line-height:1}
+.county-pill.sara .pill-count{color:var(--coral-light)}
+.county-pill.mana .pill-count{color:var(--cyan-light)}
+.county-pill.stlu .pill-count{color:var(--teal-light)}
+.county-pill.empty .pill-count{color:var(--text-muted)}
+.pill-label{font-size:8px;color:var(--text-muted)}
+
+.entity-totals{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0;min-width:90px}
+.entity-total-txn{font-family:var(--font-display);font-size:22px;font-weight:600;color:var(--violet-light)}
+.entity-total-vol{font-size:10px;color:var(--text-muted)}
+.entity-total-avg{font-size:10px;color:var(--text-secondary);font-family:var(--font-mono)}
+
+.entity-arrow{color:var(--text-muted);font-size:16px;transition:var(--transition)}
+.entity-row:hover .entity-arrow{color:var(--violet-light);transform:translateX(3px)}
+
+/* Pagination */
+.pagination-bar{display:flex;align-items:center;justify-content:space-between;
+  padding:16px 24px;background:var(--navy-card);border:1px solid var(--navy-border);border-radius:var(--radius-lg)}
+.page-info{font-size:11px;color:var(--text-muted)}
+.page-controls{display:flex;gap:6px}
+.page-btn{padding:6px 12px;background:transparent;border:1px solid var(--navy-border);
+  border-radius:var(--radius-md);color:var(--text-secondary);font-family:var(--font-body);
+  font-size:11px;cursor:pointer;transition:var(--transition)}
+.page-btn:hover:not(:disabled){border-color:var(--violet);color:var(--violet-light)}
+.page-btn.active{background:rgba(139,92,246,.15);border-color:var(--violet);color:var(--violet-light)}
+.page-btn:disabled{opacity:.3;cursor:default}
+.page-ellipsis{padding:6px 4px;color:var(--text-muted);font-size:11px}
+
+/* Modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(4,8,16,.85);backdrop-filter:blur(8px);
+  z-index:1000;display:none;align-items:center;justify-content:center;padding:24px}
+.modal-overlay.open{display:flex}
+.modal-box{background:var(--navy-card);border:1px solid var(--navy-border);border-radius:var(--radius-xl);
+  width:100%;max-width:900px;max-height:90vh;overflow-y:auto;box-shadow:0 24px 80px rgba(0,0,0,.7);
+  position:relative}
+.modal-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--coral),var(--violet),var(--cyan))}
+.modal-header{display:flex;align-items:flex-start;justify-content:space-between;
+  padding:24px 28px 16px;border-bottom:1px solid var(--navy-border)}
+.modal-header-left{display:flex;flex-direction:column;gap:6px}
+.modal-entity-type{font-size:9px;font-weight:600;letter-spacing:.25em;color:var(--text-muted);text-transform:uppercase}
+.modal-entity-name{font-family:var(--font-display);font-size:28px;font-weight:300;color:var(--text-primary)}
+.modal-county-dots{display:flex;gap:8px;margin-top:4px}
+.modal-county-dot{display:flex;align-items:center;gap:6px;font-size:10px;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase}
+.modal-county-dot::before{content:'';width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.modal-county-dot.sara{color:var(--coral-light)}.modal-county-dot.sara::before{background:var(--coral)}
+.modal-county-dot.mana{color:var(--cyan-light)}.modal-county-dot.mana::before{background:var(--cyan)}
+.modal-county-dot.stlu{color:var(--teal-light)}.modal-county-dot.stlu::before{background:var(--teal)}
+.modal-close{width:32px;height:32px;background:var(--navy-mid);border:1px solid var(--navy-border);
+  border-radius:50%;color:var(--text-muted);cursor:pointer;font-size:14px;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:var(--transition)}
+.modal-close:hover{border-color:var(--coral);color:var(--coral-light)}
+.modal-body{padding:24px 28px;display:flex;flex-direction:column;gap:24px}
+.modal-chart-wrap{position:relative;height:300px}
+.modal-county-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.modal-county-card{padding:16px 18px;border-radius:var(--radius-lg);border:1px solid}
+.modal-county-card.sara{background:rgba(232,80,106,.06);border-color:rgba(232,80,106,.2)}
+.modal-county-card.mana{background:rgba(6,182,212,.06);border-color:rgba(6,182,212,.2)}
+.modal-county-card.stlu{background:rgba(42,191,176,.06);border-color:rgba(42,191,176,.2)}
+.mcc-title{font-size:9px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;margin-bottom:8px}
+.modal-county-card.sara .mcc-title{color:var(--coral)}
+.modal-county-card.mana .mcc-title{color:var(--cyan)}
+.modal-county-card.stlu .mcc-title{color:var(--teal)}
+.mcc-txn{font-family:var(--font-display);font-size:28px;font-weight:600;line-height:1;margin-bottom:4px}
+.modal-county-card.sara .mcc-txn{color:var(--coral-light)}
+.modal-county-card.mana .mcc-txn{color:var(--cyan-light)}
+.modal-county-card.stlu .mcc-txn{color:var(--teal-light)}
+.mcc-row{display:flex;justify-content:space-between;font-size:10px;margin-top:4px}
+.mcc-label{color:var(--text-muted)}
+.mcc-val{color:var(--text-secondary);font-family:var(--font-mono)}
+.modal-insight{background:rgba(139,92,246,.06);border:1px solid rgba(139,92,246,.2);
+  border-radius:var(--radius-lg);padding:16px 18px;font-size:12px;color:var(--text-secondary);line-height:1.7}
+.modal-insight strong{color:var(--violet-light)}
+
+/* Footer */
+.app-footer{padding:18px 32px;border-top:1px solid var(--navy-border);
+  display:flex;justify-content:space-between;font-size:10px;color:var(--text-muted)}
+.footer-db{font-family:var(--font-mono)}
+
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--navy-deep)}
+::-webkit-scrollbar-thumb{background:var(--navy-border);border-radius:3px}
+@media(max-width:1100px){.entity-row{grid-template-columns:auto 1fr;gap:12px}
+  .county-pills,.entity-totals,.entity-arrow{display:none}}
+@media(max-width:768px){.report-main,.page-hero,.topnav{padding-left:16px;padding-right:16px}}
+
+/* Lee and Pinellas county colors */
+.county-pill.lee{background:rgba(201,168,76,.08);border-color:rgba(201,168,76,.2)}
+.county-pill.pin{background:rgba(139,92,246,.08);border-color:rgba(139,92,246,.2)}
+.county-pill.lee .pill-county{color:var(--gold)}
+.county-pill.pin .pill-county{color:var(--violet)}
+.county-pill.lee .pill-count{color:var(--gold-light)}
+.county-pill.pin .pill-count{color:var(--violet-light)}
+.modal-county-card.lee{background:rgba(201,168,76,.06);border-color:rgba(201,168,76,.2)}
+.modal-county-card.pin{background:rgba(139,92,246,.06);border-color:rgba(139,92,246,.2)}
+.modal-county-card.lee .mcc-title{color:var(--gold)}
+.modal-county-card.pin .mcc-title{color:var(--violet)}
+.modal-county-card.lee .mcc-txn{color:var(--gold-light)}
+.modal-county-card.pin .mcc-txn{color:var(--violet-light)}
+.modal-county-dot.lee{color:var(--gold-light)}.modal-county-dot.lee::before{background:var(--gold)}
+.modal-county-dot.pin{color:var(--violet-light)}.modal-county-dot.pin::before{background:var(--violet)}
+.type-tab.county-lee.active{background:rgba(201,168,76,.12);border-color:rgba(201,168,76,.4);color:var(--gold-light)}
+.type-tab.county-pin.active{background:rgba(139,92,246,.12);border-color:rgba(139,92,246,.4);color:var(--violet-light)}
+
+.county-pill.brev { border-color: rgba(42,191,176,0.4); background: rgba(42,191,176,0.08); }
+.county-pill.brev .pill-county { color: #5ED8CC; }
+.county-pill.brev .pill-count { color: #2ABFB0; }
+.modal-county-dot.brev { background: rgba(42,191,176,0.15); color: #5ED8CC; border: 1px solid rgba(42,191,176,0.3); }
+.modal-county-card.brev { border-color: rgba(42,191,176,0.3); }
+.modal-county-card.brev .mcc-title { color: #5ED8CC; }
+.modal-county-card.brev .mcc-txn { color: #2ABFB0; }
