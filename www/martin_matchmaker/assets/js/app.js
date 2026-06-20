@@ -2,7 +2,7 @@
 
 const State = {
     mode:'matches', city:'', tier:'', page:1, perPage:20,
-    total:0, pages:0, buyerSearch:''
+    total:0, pages:0, buyerSearch:'', addressSearch:''
 };
 let searchTimer = null;
 
@@ -26,6 +26,7 @@ async function loadData(){
         mode:State.mode, city:State.city, tier:State.tier,
         page:State.page, per_page:State.perPage,
         buyer:State.buyerSearch,
+        address:State.addressSearch,
     });
 
     try {
@@ -107,8 +108,9 @@ function renderMatches(sellers){
             <div class="match-card-body">
                 <div class="seller-side">
                     <div class="side-label seller-lbl">Motivated Seller</div>
+                    <div class="seller-owner">${escHtml(s.CurrentOwner||'Unknown Owner')}</div>
                     <div class="seller-address" onclick="openSellerDetail(${s.id})">${escHtml(s.SiteAddress||'Unknown Address')}</div>
-                    <div class="seller-city">${escHtml(s.SiteCity||'')} · ${escHtml(s.SiteZip||'')}</div>
+                    <div class="seller-city">${escHtml(s.SiteCity||'')} · ${escHtml(s.SiteZip||'')} · <span class="parcel-id">${escHtml(s.ParcelID||'')}</span></div>
                     <div class="seller-metrics">
                         <div class="s-metric"><div class="s-metric-label">Peak Price</div><div class="s-metric-val price">${fmtK(price)}</div></div>
                         <div class="s-metric"><div class="s-metric-label">Just Value</div><div class="s-metric-val">${jv>0?fmtK(jv):'—'}</div></div>
@@ -336,6 +338,12 @@ document.addEventListener('DOMContentLoaded',()=>{
             document.querySelectorAll('.score-tab[data-tier]').forEach(t=>t.classList.remove('active'));
             tab.classList.add('active'); State.tier=tab.dataset.tier; State.page=1; loadData();
         });
+    });
+
+    // Address search
+    document.getElementById('addressSearch').addEventListener('input',function(){
+        clearTimeout(searchTimer);
+        searchTimer=setTimeout(()=>{State.addressSearch=this.value.trim();State.page=1;loadData();},350);
     });
 
     // Buyer search

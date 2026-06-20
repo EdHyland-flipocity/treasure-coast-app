@@ -12,23 +12,6 @@
 <body>
 <div class="app-shell">
 
-<nav class="portfolio-nav">
-  <span class="portfolio-nav-label">Portfolio</span>
-  <a href="http://localhost:8080/realestate_tracker/" class="portfolio-nav-link gold-active"><span class="nav-dot"></span>Pinellas</a>
-  <div class="portfolio-nav-divider"></div>
-  <a href="http://localhost:8080/sarasota_report/" class="portfolio-nav-link coral-active"><span class="nav-dot"></span>Sarasota Report</a>
-  <div class="portfolio-nav-divider"></div>
-  <a href="http://localhost:8080/martin/" class="portfolio-nav-link martin-active"><span class="nav-dot"></span>Martin Sales</a>
-  <div class="portfolio-nav-divider"></div>
-  <a href="http://localhost:8080/martin_report/" class="portfolio-nav-link martin-active"><span class="nav-dot"></span>Martin Analysis</a>
-  <div class="portfolio-nav-divider"></div>
-  <a href="http://localhost:8080/entity_intel/" class="portfolio-nav-link violet-active"><span class="nav-dot"></span>Entity Intel</a>
-  <div class="portfolio-nav-divider"></div>
-  <a href="http://localhost:8080/motivated_radar/" class="portfolio-nav-link coral-active"><span class="nav-dot"></span>Sarasota Radar</a>
-  <div class="portfolio-nav-divider"></div>
-  <a href="http://localhost:8080/martin_radar/" class="portfolio-nav-link active"><span class="nav-dot"></span>Martin Radar</a>
-</nav>
-
 <nav class="topnav">
   <div class="topnav-brand">
     <div class="brand-emblem">🎯</div>

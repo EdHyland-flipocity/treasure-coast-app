@@ -25,6 +25,13 @@ try {
         $params = [];
         if ($city !== '') { $cond[] = 'ms.SiteCity = :city';   $params[':city'] = $city; }
         if ($tier !== '') { $cond[] = 'ms.price_tier = :tier'; $params[':tier'] = $tier; }
+        $address = trim($_GET['address'] ?? '');
+        if ($address !== '') {
+            $cond[] = '(ms.SiteAddress LIKE :addr OR ms.ParcelID LIKE :addr2 OR ms.CurrentOwner LIKE :addr3)';
+            $params[':addr']  = '%'.$address.'%';
+            $params[':addr2'] = '%'.$address.'%';
+            $params[':addr3'] = '%'.$address.'%';
+        }
         $w = 'WHERE ' . implode(' AND ', $cond);
 
         // Count

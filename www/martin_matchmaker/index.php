@@ -12,23 +12,6 @@
 <body>
 <div class="app-shell">
 
-<nav class="portfolio-nav">
-  <span class="portfolio-nav-label">Portfolio</span>
-  <a href="http://localhost:8080/realestate_tracker/" class="portfolio-nav-link gold-active"><span class="nav-dot"></span>Pinellas</a>
-  <div class="portfolio-nav-divider"></div>
-  <a href="http://localhost:8080/martin/" class="portfolio-nav-link martin-nav"><span class="nav-dot"></span>Martin Sales</a>
-  <div class="portfolio-nav-divider"></div>
-  <a href="http://localhost:8080/martin_report/" class="portfolio-nav-link martin-nav"><span class="nav-dot"></span>Martin Analysis</a>
-  <div class="portfolio-nav-divider"></div>
-  <a href="http://localhost:8080/martin_radar/" class="portfolio-nav-link martin-nav"><span class="nav-dot"></span>Martin Sellers</a>
-  <div class="portfolio-nav-divider"></div>
-  <a href="http://localhost:8080/martin_matchmaker/" class="portfolio-nav-link active"><span class="nav-dot"></span>Matchmaker</a>
-  <div class="portfolio-nav-divider"></div>
-  <a href="http://localhost:8080/entity_intel/" class="portfolio-nav-link violet-active"><span class="nav-dot"></span>Entity Intel</a>
-  <div class="portfolio-nav-divider"></div>
-  <a href="http://localhost:8080/crossref/" class="portfolio-nav-link violet-active"><span class="nav-dot"></span>Cross Reference</a>
-</nav>
-
 <nav class="topnav">
   <div class="topnav-brand">
     <div class="brand-emblem">⟷</div>
@@ -91,6 +74,7 @@
         </div>
       </div>
       <div class="filter-right">
+        <input type="text" id="addressSearch" class="search-input" placeholder="🔍 Search address or parcel ID…">
         <input type="text" id="buyerSearch" class="search-input" placeholder="Search buyer name…" style="display:none">
         <a href="#" id="exportBtn" class="export-btn">⬇ Export CSV</a>
         <span class="result-count" id="resultCount">Loading…</span>

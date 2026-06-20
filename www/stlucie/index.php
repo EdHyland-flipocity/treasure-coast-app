@@ -12,28 +12,6 @@
 </head>
 <body>
 <div class="app-shell">
-    <nav class="portfolio-nav">
-        <span class="portfolio-nav-label">Portfolio</span>
-        <a href="http://localhost:8080/realestate_tracker/" class="portfolio-nav-link gold-active">
-            <span class="nav-dot"></span>Pinellas &middot; LLC
-        </a>
-        <div class="portfolio-nav-divider"></div>
-        <a href="http://localhost:8080/stlucie/" class="portfolio-nav-link active">
-            <span class="nav-dot"></span>St. Lucie &middot; Single Family
-        </a>
-        <div class="portfolio-nav-divider"></div>
-        <a href="http://localhost:8080/hillsborough/" class="portfolio-nav-link">
-            <span class="nav-dot"></span>Hillsborough &middot; Property
-        </a>
-        <div class="portfolio-nav-divider"></div>
-        <a href="http://localhost:8080/sarasota/" class="portfolio-nav-link">
-            <span class="nav-dot"></span>Sarasota &middot; Parcel Sales
-        </a>
-        <div class="portfolio-nav-divider"></div>
-        <a href="http://localhost:8080/crossref/" class="portfolio-nav-link">
-            <span class="nav-dot"></span>Cross Reference
-        </a>
-    </nav>
     <nav class="topnav">
         <div class="topnav-brand">
             <div class="brand-emblem"></div>

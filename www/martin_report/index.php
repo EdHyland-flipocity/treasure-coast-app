@@ -13,25 +13,6 @@
 <body>
 <div class="app-shell">
 
-    <nav class="portfolio-nav">
-        <span class="portfolio-nav-label">Portfolio</span>
-        <a href="http://localhost:8080/realestate_tracker/" class="portfolio-nav-link gold-active"><span class="nav-dot"></span>Pinellas</a>
-        <div class="portfolio-nav-divider"></div>
-        <a href="http://localhost:8080/stlucie/" class="portfolio-nav-link teal-active"><span class="nav-dot"></span>St. Lucie</a>
-        <div class="portfolio-nav-divider"></div>
-        <a href="http://localhost:8080/hillsborough/" class="portfolio-nav-link amber-active"><span class="nav-dot"></span>Hillsborough</a>
-        <div class="portfolio-nav-divider"></div>
-        <a href="http://localhost:8080/sarasota/" class="portfolio-nav-link coral-active"><span class="nav-dot"></span>Sarasota</a>
-        <div class="portfolio-nav-divider"></div>
-        <a href="http://localhost:8080/sarasota_report/" class="portfolio-nav-link coral-active"><span class="nav-dot"></span>Sarasota Analysis</a>
-        <div class="portfolio-nav-divider"></div>
-        <a href="http://localhost:8080/martin/" class="portfolio-nav-link martin-nav"><span class="nav-dot"></span>Martin Sales</a>
-        <div class="portfolio-nav-divider"></div>
-        <a href="http://localhost:8080/martin_report/" class="portfolio-nav-link active"><span class="nav-dot"></span>Martin Analysis</a>
-        <div class="portfolio-nav-divider"></div>
-        <a href="http://localhost:8080/crossref/" class="portfolio-nav-link violet-active"><span class="nav-dot"></span>Cross Reference</a>
-    </nav>
-
     <nav class="topnav">
         <div class="topnav-brand">
             <div class="brand-emblem"></div>

@@ -253,3 +253,17 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 ::-webkit-scrollbar-thumb{background:var(--navy-border);border-radius:3px}
 @media(max-width:900px){.match-card-body{grid-template-columns:1fr}.match-arrow{flex-direction:row;padding:10px 16px}.buyer-grid{grid-template-columns:1fr}}
 @media(max-width:768px){.report-main,.page-hero,.topnav{padding-left:16px;padding-right:16px}.kpi-strip{grid-template-columns:repeat(2,1fr)}}
+
+.seller-owner {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--teal-light, #5ED8CC);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+}
+.parcel-id {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--text-muted, #6b7a8d);
+}
