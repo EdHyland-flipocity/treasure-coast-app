@@ -27,7 +27,7 @@
   }
   .titlebar-name { font-size: 13px; font-weight: 600; color: #5ED8CC; letter-spacing: 0.04em; white-space: nowrap; }
 
-  .tabbar {
+  .tabbar { overflow-x: auto; scrollbar-width: thin; scrollbar-color: #1A2E4A transparent;
     display: flex; align-items: center; gap: 2px;
     margin-left: auto; flex-wrap: nowrap; overflow: hidden;
     -webkit-app-region: no-drag;
@@ -89,7 +89,68 @@
   .loading-progress { width: 200px; height: 2px; background: #1A2E4A; border-radius: 1px; overflow: hidden; }
   .loading-bar { height: 100%; background: linear-gradient(90deg, #2ABFB0, #5ED8CC); border-radius: 1px; animation: progress 2s ease-in-out infinite; width: 40%; }
   @keyframes progress { 0%{transform:translateX(-100%)} 100%{transform:translateX(400%)} }
-</style>
+
+  /* ── Entity Ticker ────────────────────────────── */
+  .ticker-bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    height: 32px;
+    background: #030810;
+    border-top: 1px solid #1A2E4A;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    z-index: 9999;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+  }
+  .ticker-label {
+    padding: 0 12px;
+    color: #2ABFB0;
+    font-size: 10px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    border-right: 1px solid #1A2E4A;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    background: #060D1A;
+    flex-shrink: 0;
+  }
+  .ticker-track {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    animation: tickerScroll 90s linear infinite;
+    gap: 0;
+  }
+  .ticker-track:hover { animation-play-state: paused; }
+  @keyframes tickerScroll {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .ticker-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 20px;
+    border-right: 1px solid #0F1E35;
+    height: 32px;
+  }
+  .ticker-name { color: #8899AA; font-size: 10px; letter-spacing: .04em; }
+  .ticker-vol  { color: #4A6080; font-size: 10px; }
+  .ticker-chg  { font-size: 11px; font-weight: 700; }
+  .ticker-chg.up   { color: #10B981; }
+  .ticker-chg.down { color: #EF4444; }
+  .ticker-chg.flat { color: #E8EDF5; }
+  .ticker-chg.new  { color: #8B5CF6; }
+  .ticker-arrow.up   { color: #10B981; }
+  .ticker-arrow.down { color: #EF4444; }
+  /* Push content up so ticker doesn't overlap */
+  .app-shell { padding-bottom: 32px; }
+
+  </style>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -112,6 +173,9 @@
     <span class="tab-county">Regional</span>
     <div class="tab" data-tab="fliptracker" onclick="switchTab('fliptracker')"><span class="tab-dot"></span>Flip Tracker</div>
     <div class="tab" data-tab="entityintel" onclick="switchTab('entityintel')"><span class="tab-dot"></span>Entity Intel</div>
+    <div class="tab-divider"></div>
+    <span class="tab-county">Indian River</span>
+    <div class="tab" data-tab="irreport" onclick="switchTab('irreport')"><span class="tab-dot"></span>IR County</div>
   </div>
 </div>
 
@@ -142,6 +206,7 @@
   <webview id="wv-martinradar"                 src="about:blank"                                 allowpopups webpreferences="allowRunningInsecureContent=yes, javascript=yes"></webview>
   <webview id="wv-fliptracker"                 src="about:blank"                                 allowpopups webpreferences="allowRunningInsecureContent=yes, javascript=yes"></webview>
   <webview id="wv-entityintel"                 src="about:blank"                                 allowpopups webpreferences="allowRunningInsecureContent=yes, javascript=yes"></webview>
+  <webview id="wv-irreport"                    src="about:blank"                                 allowpopups webpreferences="allowRunningInsecureContent=yes, javascript=yes"></webview>
 </div>
 
 <script>
@@ -156,6 +221,7 @@ const TABS = {
   martinradar: () => `http://127.0.0.1:${PHP_PORT}/martin_radar/`,
   fliptracker: () => `http://127.0.0.1:${PHP_PORT}/treasure_fliptracker/`,
   entityintel: () => `http://127.0.0.1:${PHP_PORT}/entity_intel/`,
+  irreport:    () => `http://127.0.0.1:${PHP_PORT}/indian_river_report/`,
 };
 
 async function init() {
@@ -250,5 +316,46 @@ document.addEventListener('keydown', e => {
 
 init();
 </script>
+
+<div class="ticker-bar">
+  <div class="ticker-label">⬡ ENTITY INTEL</div>
+  <div class="ticker-track" id="tickerTrack">
+    <div style="padding:0 20px;color:#2A4060;font-size:10px">Loading market data…</div>
+  </div>
+</div>
+
+<script>
+async function loadTicker() {
+  try {
+    const res  = await fetch('http://127.0.0.1:8080/entity_ticker/ticker.php');
+    const data = await res.json();
+    if (!data.success) return;
+
+    const items = data.ticker.map(t => {
+      const dir  = t.dir;
+      const arrow = dir === 'up' ? '▲' : dir === 'down' ? '▼' : dir === 'new' ? '★' : '●';
+      const chgTxt = t.chg !== null ? (t.chg > 0 ? '+' : '') + t.chg + '%' : dir === 'new' ? 'NEW' : '—';
+      const vol  = t.vol_m >= 1000 ? '$' + (t.vol_m/1000).toFixed(1) + 'B' : '$' + t.vol_m + 'M';
+      return `<div class="ticker-item">
+        <span class="ticker-name">${t.name.substring(0,28)}</span>
+        <span class="ticker-vol">${vol}</span>
+        <span class="ticker-arrow ${dir}">${arrow}</span>
+        <span class="ticker-chg ${dir}">${chgTxt}</span>
+      </div>`;
+    }).join('');
+
+    // Duplicate for seamless loop
+    document.getElementById('tickerTrack').innerHTML = items + items;
+
+  } catch(e) {
+    console.warn('Ticker load failed', e);
+  }
+}
+
+loadTicker();
+// Refresh every 5 minutes
+setInterval(loadTicker, 300000);
+</script>
+
 </body>
 </html>

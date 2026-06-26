@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 
   // ── Element refs ────────────────────────────────────────────
   const nameInput     = $('nameInput');
+  const addressInput  = $('addressInput');
   const acDropdown    = $('acDropdown');
   const filterBtn     = $('filterBtn');
   const clearBtn      = $('clearBtn');
@@ -90,6 +91,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   function applyFilter(){
     closeDropdown();
     State.name=nameInput.value.trim();
+    State.address=addressInput.value.trim();
     State.page=1;
     activeBadgeBar.classList.toggle('visible',!!State.name);
     if(State.name)badgeName.textContent=State.name;
@@ -97,7 +99,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   }
 
   function clearFilter(){
-    nameInput.value='';State.name='';State.page=1;
+    nameInput.value='';State.name='';addressInput.value='';State.address='';State.page=1;
     activeBadgeBar.classList.remove('visible');
     loadData();loadStats();
   }

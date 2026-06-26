@@ -2,6 +2,7 @@
 header('Content-Type: application/json');
 require_once __DIR__ . '/../includes/db.php';
 $name    = trim($_GET['name']     ?? '');
+$address = trim($_GET['address']  ?? '');
 $lucDesc = trim($_GET['luc_desc'] ?? '');
 $page    = max(1, (int)($_GET['page']     ?? 1));
 $perPage = min(100, max(10, (int)($_GET['per_page'] ?? 25)));
@@ -13,6 +14,7 @@ try {
     $pdo = getDBConnection();
     $conditions = []; $params = [];
     if ($name    !== '') { $conditions[] = '(`Grantor` LIKE :name1 OR `Grantee` LIKE :name2 OR `Owner` LIKE :name3)'; $params[':name1'] = '%'.$name.'%'; $params[':name2'] = '%'.$name.'%'; $params[':name3'] = '%'.$name.'%'; }
+    if ($address !== '') { $conditions[] = '`Situs` LIKE :addr'; $params[':addr'] = '%'.$address.'%'; }
     if ($lucDesc !== '') { $conditions[] = '`LUC Description` = :luc'; $params[':luc']  = $lucDesc; }
     $w = $conditions ? 'WHERE '.implode(' AND ', $conditions) : '';
     $countStmt = $pdo->prepare("SELECT COUNT(*) FROM `stluciecty_singleFamily` $w");

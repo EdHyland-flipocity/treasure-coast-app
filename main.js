@@ -84,6 +84,7 @@ function buildMenu() {
             { label: 'Martin Radar',       accelerator: 'CmdOrCtrl+5', click: () => mainWindow?.webContents.send('navigate', 'martinradar') },
             { label: 'Flip Tracker',       accelerator: 'CmdOrCtrl+6', click: () => mainWindow?.webContents.send('navigate', 'fliptracker') },
             { label: 'Entity Intel',       accelerator: 'CmdOrCtrl+7', click: () => mainWindow?.webContents.send('navigate', 'entityintel') },
+            { label: 'Indian River County', accelerator: 'CmdOrCtrl+8', click: () => mainWindow?.webContents.send('navigate', 'irreport') },
             { type: 'separator' },
             { role: 'togglefullscreen' }, { role: 'zoomIn' }, { role: 'zoomOut' }, { role: 'resetZoom' },
         ]},

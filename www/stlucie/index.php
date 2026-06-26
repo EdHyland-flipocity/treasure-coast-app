@@ -40,7 +40,7 @@
     </div>
     <main class="main-content">
         <section class="filter-panel">
-            <div class="filter-header"><span class="filter-header-icon">⬡</span><span class="filter-header-text">Filter by Owner Name</span></div>
+            <div class="filter-header"><span class="filter-header-icon">⬡</span><span class="filter-header-text">Filter by Owner Name or Address</span></div>
             <div class="filter-row">
                 <div class="filter-group">
                     <label class="filter-label" for="nameInput">Owner / Grantee Name</label>
@@ -48,6 +48,13 @@
                         <span class="input-icon">⬡</span>
                         <input type="text" id="nameInput" class="filter-input" placeholder="Search owner name…" autocomplete="off" spellcheck="false">
                         <div class="autocomplete-dropdown" id="acDropdown"></div>
+                    </div>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label" for="addressInput">Street Address</label>
+                    <div class="autocomplete-wrap">
+                        <span class="input-icon">⬡</span>
+                        <input type="text" id="addressInput" class="filter-input" placeholder="Search address…" autocomplete="off" spellcheck="false">
                     </div>
                 </div>
                 <div class="per-page-wrap">
